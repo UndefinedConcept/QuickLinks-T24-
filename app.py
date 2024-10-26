@@ -50,7 +50,7 @@ def home():
         else:
             short_code = request.form['personal_shortcut']
             # Validation to ensure the personal shortcut is unique
-            if (short_code in url_mapping) or (short_code == "" or "about") or (not checks(short_code)):
+            if (short_code in url_mapping) or (short_code == "" or "about") or (checks(short_code)):
                 return "Invalid Shortcut Name. Only letters and numbers, no duplicates <br>Please enter a valid shortcut with only numbers and letter."
         url_mapping[short_code] = original_url
         save_url_mapping(short_code, original_url)  # Save to CSV
