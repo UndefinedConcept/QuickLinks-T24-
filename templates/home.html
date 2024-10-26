@@ -3,27 +3,53 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>URL Shortener - Home</title>
+    <title>URL Shortener</title>
+    <link href="https://fonts.googleapis.com/css2?family=Ubuntu+Mono:wght@400&display=swap" rel="stylesheet">
     <style>
-        .flex-container {
+        body {
+            margin: 0;
+            font-family: 'Ubuntu Mono', monospace;
+        }
+        header {
             display: flex;
-            align-items: center; /* Center items vertically */
+            justify-content: space-between;
+            align-items: center;
+            background-color: #333;
+            color: white;
+            padding: 10px 20px;
         }
-        input {
-            flex: 1; /* Allow the input to grow */
-            min-width: 100px; /* Minimum width */
-            padding: 10px;
-            margin: 5px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin-left: 20px;
         }
+        nav a:hover {
+            text-decoration: underline;
+        }
+        .flex-container {
+              display: flex;
+              align-items: center; /* Center items vertically */
+          }
+          input {
+              flex: 1; /* Allow the input to grow */
+              min-width: 100px; /* Minimum width */
+              padding: 10px;
+              margin: 5px;
+              border: 1px solid #ccc;
+              border-radius: 4px;
+          }
     </style>
 </head>
-
 <body>
-    <h1 style = "background-color: powderblue;">URL Shortener</h1>
-    <form method="POST" style="font-size: 150%;" action="/">
-        URL to shorten: <div class="flex-container"><input type="text" name="url" required></div>
+    <header>
+        <h1>URL Shortener</h1>
+        <nav>
+            <a href="/">Home</a>
+            <a href="/about">About</a>
+        </nav>
+    </header>
+    <form method="POST" action="/">
+        <br>URL to shorten: <div class="flex-container"><input type="text" name="url" required></div>
         <label for="shortcut_type">Choose shortcut type:</label>
         <select name="shortcut_type" id="shortcut_type" required onchange="togglePersonalShortcut()">
             <option value="random">Random Shortcut</option>
@@ -34,9 +60,20 @@
             <input type="text" name="personal_shortcut" placeholder="Enter personal shortcut">
         </div>
     </form>
-    <br>
-    <a href="/urls">View all shortened URLs</a>
+      <table border="1">
+        <tr>
+            <th>Short URL</th>
+            <th>Original URL</th>
+        </tr>
+        {% for short_code, original_url in url_mapping.items() %}
+            <tr>
+                <td><a href="/{{ short_code }}">/{{ short_code }}</a></td>
+                <td>{{ original_url }}</td>
+            </tr>
+        {% endfor %}
+    </table>
 </body>
+
 <script>
     function togglePersonalShortcut() {
         var shortcutType = document.getElementById("shortcut_type").value;
@@ -49,4 +86,3 @@
         }
     }
 </script>
-</html>
