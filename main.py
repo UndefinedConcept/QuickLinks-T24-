@@ -46,18 +46,7 @@ def home():
             # Optionally, you can add validation to ensure the personal shortcut is unique
         url_mapping[short_code] = original_url
         save_url_mapping(short_code, original_url)  # Save to CSV
-        return f'Shortened URL: <a href="/{short_code}">/{short_code}</a>'
-    
-    return render_template('testing.html')
-# @app.route('/', methods=['GET', 'POST'])
-# def home():
-#     if request.method == 'POST':
-#         original_url = request.form['url']
-#         short_code = generate_short_code()
-#         url_mapping[short_code] = original_url
-#         save_url_mapping(short_code, original_url)  # Save to CSV
-#         return f'Shortened URL: <a href="/{short_code}">/{short_code}</a>'
-#     return render_template('home.html')
+    return render_template('testing.html', url_mapping=url_mapping)
 
 @app.route('/<short_code>')
 def redirect_to_url(short_code):
@@ -66,10 +55,10 @@ def redirect_to_url(short_code):
         return redirect(original_url)
     return 'URL not found', 404
 
-@app.route('/urls')
+@app.route('/about')
 def list_urls():
     """Display all shortened URLs and their original versions in a table."""
-    return render_template('tables.html', url_mapping=url_mapping)
+    return render_template('about.html')
 
 if __name__ == '__main__':
     app.run(debug=True)
