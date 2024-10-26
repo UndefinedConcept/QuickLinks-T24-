@@ -1,4 +1,5 @@
 from flask import Flask, request, redirect, render_template
+from validators import url
 import random
 import string
 import csv
@@ -35,11 +36,19 @@ def generate_short_code(length=6):
 def home():
     if request.method == 'POST':
         original_url = request.form['url']
-        short_code = generate_short_code()
+        shortcut_type = request.form['shortcut_type']
+        if not url(original_url):
+            return "Invalid URL. Please enter a valid URL."
+        if shortcut_type == 'random':
+            short_code = generate_short_code()
+        else:
+            short_code = request.form['personal_shortcut']
+            # Optionally, you can add validation to ensure the personal shortcut is unique
         url_mapping[short_code] = original_url
         save_url_mapping(short_code, original_url)  # Save to CSV
         return f'Shortened URL: <a href="/{short_code}">/{short_code}</a>'
-    return render_template('home.html')
+    
+    return render_template('testing.html')
 
 @app.route('/<short_code>')
 def redirect_to_url(short_code):
