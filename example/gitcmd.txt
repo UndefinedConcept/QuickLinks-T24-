@@ -1,0 +1,30 @@
+9/21-9/22: Notes for Git (and Bash) [learnxinyminutes.com/docs/git/] [devhints.io]
+$ git config --global user.name “[name]” # or `user.email [email]` to configure the git commit
+$ git clone [github_URL] # Clones project (`git clone --depth 1 [URL]` for latest snapshot)
+
+$ ls # List the files    $ history # Shows history    [Use ⬆ and ⬇ arrows to edit old lines]
+$ !$ # Expand the last parameter of the most recent command or just Ctrl+p or Ctrl+Up
+$ !! # Execute last command again
+$ cd [folder/filename] # Open folder or file [bash]
+
+$ git log # Shows all commits
+$ git branch -a # Lists existing branches & remote
+$ git status # Check differences between the index file (your curr. copy) and curr HEAD.
+$ git diff # Show the difference between your working dir and the index (with more options)
+
+$ git add testfile.py # Add file to your current working directory
+$ git rm testfile.py # Removes files from the current working directory
+
+$ git branch [newBranch] # Create branch    $ git branch -d [branchName] #Delete branch
+$ git checkout [branchName] # Checkout/discard changes (defaults to master branch if None)
+$ git merge [branchName] # Merge changes from external commits into the current branch
+$ git commit -m “[message]” # Commit with a message (Best Practice)
+$ git revert [commit ID] # Reverts the commit (`$ git log` to get the history)
+
+How to commit stuff:
+1. git add [file] # adds files to the local branch
+git status # show what stuff is on your local branch
+git remove [file] # in case you want to remove stuff from the local branch
+2. git commit -m "stuff" # adds to the about to be commit branch
+
+3. git push # send to GitHub
