@@ -32,6 +32,12 @@ def generate_short_code(length=6):
     characters = string.ascii_letters + string.digits
     return ''.join(random.choice(characters) for _ in range(length))
 
+def checks(s):
+    for char in s:
+        if not (char.isalpha() or char.isdigit()):
+            return False
+    return True
+
 @app.route('/', methods=['GET', 'POST'])
 def home():
     if request.method == 'POST':
@@ -44,7 +50,7 @@ def home():
         else:
             short_code = request.form['personal_shortcut']
             # Validation to ensure the personal shortcut is unique
-            if (short_code in url_mapping) or (short_code == "" or "about") or (not short_code.isalnum()):
+            if (short_code in url_mapping) or (short_code == "" or "about") or (not checks(short_code)):
                 return "Invalid Shortcut Name. Only letters and numbers, no duplicates <br>Please enter a valid shortcut with only numbers and letter."
         url_mapping[short_code] = original_url
         save_url_mapping(short_code, original_url)  # Save to CSV
