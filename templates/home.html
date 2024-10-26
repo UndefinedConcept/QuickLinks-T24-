@@ -4,11 +4,25 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>URL Shortener - Home</title>
+    <style>
+        .flex-container {
+            display: flex;
+            align-items: center; /* Center items vertically */
+        }
+        input {
+            flex: 1; /* Allow the input to grow */
+            min-width: 100px; /* Minimum width */
+            padding: 10px;
+            margin: 5px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+    </style>
 </head>
 <body>
-    <h1>URL Shortener</h1>
-    <form method="post" action="/">
-        URL to shorten: <input type="text" name="url" required>
+    <h1 style = "background-color: powderblue;">URL Shortener</h1>
+    <form style="font-size: 150%;" method="post" action="/">
+        URL to shorten: <div class="flex-container"><input type="text" name="url" required></div>
         <input type="submit" value="Shorten">
     </form>
     <br>
