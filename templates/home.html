@@ -7,7 +7,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Ubuntu+Mono:wght@400&display=swap" rel="stylesheet">
     <style>
         body {
-            margin: 0;
+            margin: 0px;
             font-family: 'Ubuntu Mono', monospace;
         }
         header {
@@ -52,7 +52,7 @@
             <a href="/about">About</a>
         </nav>
     </header>
-    <form method="POST" action="/">
+    <form style="margin: 10px;" method="POST" action="/">
         <br>URL to shorten: <div class="flex-container"><input type="text" name="url" required></div>
         <label for="shortcut_type">Choose shortcut type:</label>
         <select name="shortcut_type" id="shortcut_type" required onchange="togglePersonalShortcut()">
@@ -64,7 +64,7 @@
             <input type="text" name="personal_shortcut" placeholder="Enter personal shortcut">
         </div>
     </form>
-    <div style="max-width: 100%;">
+    <div style="max-width: 99%; margin: 1%;">
       <table border="1">
         <tr>
             <th style="max-width: 25%; word-wrap: break-word;">Short URL</th>
