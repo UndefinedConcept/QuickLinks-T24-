@@ -1,9 +1,9 @@
 # Technica Group HeartJ3
 
 ## Getting Started:
-Type: 'git pull' to update your workspace (please don't edit the same file)
+Type: `git pull` to update your workspace (please don't edit the same file)
 Type: `pip install -r /path/to/requirements.txt` to download the required PYTHON modules
-*Update req: `
+*Install requirements manually: `pip install flask validators`
 
 ## How to Commit Stuff
 1. git pull # To catch up to the main branch (make sure ot let the member that you are about to commit files)
