@@ -38,6 +38,10 @@
               border: 1px solid #ccc;
               border-radius: 4px;
           }
+        table {
+            table-layout: fixed;
+            width: 100%;
+        }
     </style>
 </head>
 <body>
@@ -60,18 +64,20 @@
             <input type="text" name="personal_shortcut" placeholder="Enter personal shortcut">
         </div>
     </form>
+    <div style="max-width: 100%;">
       <table border="1">
         <tr>
-            <th>Short URL</th>
-            <th>Original URL</th>
+            <th style="max-width: 25%; word-wrap: break-word;">Short URL</th>
+            <th style="max-width: 75%; word-wrap: break-word;">Original URL</th>
         </tr>
         {% for short_code, original_url in url_mapping.items() %}
             <tr>
-                <td><a href="/{{ short_code }}">/{{ short_code }}</a></td>
-                <td>{{ original_url }}</td>
+                <td style="max-width: 25%; word-wrap: break-word;"><a href="/{{ short_code }}">/{{ short_code }}</a></td>
+                <td style="max-width: 75%; word-wrap: break-word;">{{ original_url }}</td>
             </tr>
         {% endfor %}
     </table>
+</div>
 </body>
 
 <script>
