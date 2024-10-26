@@ -20,3 +20,11 @@ $ git checkout [branchName] # Checkout/discard changes (defaults to master branc
 $ git merge [branchName] # Merge changes from external commits into the current branch
 $ git commit -m “[message]” # Commit with a message (Best Practice)
 $ git revert [commit ID] # Reverts the commit (`$ git log` to get the history)
+
+How to commit stuff:
+1. git add [file] # adds files to the local branch
+git status # show what stuff is on your local branch
+git remove [file] # in case you want to remove stuff from the local branch
+2. git commit -m "stuff" # adds to the about to be commit branch
+
+3. git push # send to GitHub
