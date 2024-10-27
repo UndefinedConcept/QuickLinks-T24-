@@ -1,4 +1,4 @@
-from flask import Flask, request, redirect, render_template
+from flask import Flask, request, redirect, render_template, jsonify
 from validators import url
 import random
 import string
@@ -30,7 +30,8 @@ url_mapping = load_url_mapping()
 def generate_short_code(length=6):
     """Generate a random short code."""
     characters = string.ascii_letters + string.digits
-    return ''.join(random.choice(characters) for _ in range(length))
+    randomStr = ''.join(random.choice(characters) for _ in range(length))
+    return randomStr if (randomStr not in url_mapping) else generate_short_code(length+1)
 
 def checks(s):
     for char in s:
@@ -44,15 +45,13 @@ def home():
         original_url = request.form['url']
         shortcut_type = request.form['shortcut_type']
         if not url(original_url):
-            return "Invalid URL. Please enter a valid URL."
+            return jsonify({'error': "Invalid URL. Please enter a valid URL."}), 400
         if shortcut_type == 'random':
             short_code = generate_short_code()
         else:
-            short_code = request.form['personal_shortcut']
-            # Validation to ensure the personal shortcut is unique
-            if (short_code in url_mapping) or (short_code == "" or short_code == "about") or (not checks(short_code)):
-                print(checks(short_code))
-                return "Invalid Shortcut Name. Only letters and numbers, no duplicates <br>Please enter a valid shortcut with only numbers and letter."
+            short_code = request.form['custom_shortcut']
+            if (short_code == "" or short_code == "about") or (not checks(short_code)):
+                return jsonify({'error': "Invalid Shortcut Name. Only letters and numbers, no duplicates. Please enter a valid shortcut with only numbers and letters."}), 400
         url_mapping[short_code] = original_url
         save_url_mapping(short_code, original_url)  # Save to CSV
     return render_template('home.html', url_mapping=url_mapping)
@@ -62,11 +61,11 @@ def redirect_to_url(short_code):
     original_url = url_mapping.get(short_code)
     if original_url:
         return redirect(original_url)
-    return 'URL not found', 404
+    return render_template('pageNotFound.html'), 404
 
 @app.route('/about')
 def list_urls():
-    """Display all shortened URLs and their original versions in a table."""
+    """Display the about page"""
     return render_template('about.html')
 
 if __name__ == '__main__':

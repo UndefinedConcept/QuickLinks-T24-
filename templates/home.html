@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>URL Shortener</title>
     <link href="https://fonts.googleapis.com/css2?family=Ubuntu+Mono:wght@400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css">
     <style>
         body {
             margin: 0px;
@@ -27,17 +28,17 @@
             text-decoration: underline;
         }
         .flex-container {
-              display: flex;
-              align-items: center; /* Center items vertically */
-          }
-          input {
-              flex: 1; /* Allow the input to grow */
-              min-width: 100px; /* Minimum width */
-              padding: 10px;
-              margin: 5px;
-              border: 1px solid #ccc;
-              border-radius: 4px;
-          }
+            display: flex;
+            align-items: center; /* Center items vertically */
+        }
+        input {
+            flex: 1; /* Allow the input to grow */
+            min-width: 100px; /* Minimum width */
+            padding: 10px;
+            margin: 5px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
         table {
             table-layout: fixed;
             width: 100%;
@@ -52,43 +53,68 @@
             <a href="/about">About</a>
         </nav>
     </header>
-    <form style="margin: 10px;" method="POST" action="/">
+    <form id="urlForm" style="margin: 10px;" method="POST" action="/">
         <br>URL to shorten: <div class="flex-container"><input type="text" name="url" required></div>
         <label for="shortcut_type">Choose shortcut type:</label>
-        <select name="shortcut_type" id="shortcut_type" required onchange="togglePersonalShortcut()">
+        <select name="shortcut_type" id="shortcut_type" required onchange="togglecustomShortcut()">
             <option value="random">Random Shortcut</option>
-            <option value="personal">Personal Shortcut</option>
+            <option value="custom">Custom Shortcut</option>
         </select>
         <input type="submit" value="Shorten URL">
-        <div id="personal_shortcut_container" style="display: none;">
-            <input type="text" name="personal_shortcut" placeholder="Enter personal shortcut">
+        <div id="custom_shortcut_container" style="display: none;">
+            <input type="text" name="custom_shortcut" placeholder="Enter custom shortcut">
         </div>
     </form>
     <div style="max-width: 99%; margin: 1%;">
-      <table border="1">
-        <tr>
-            <th style="max-width: 25%; word-wrap: break-word;">Short URL</th>
-            <th style="max-width: 75%; word-wrap: break-word;">Original URL</th>
-        </tr>
-        {% for short_code, original_url in url_mapping.items() %}
+        <table border="1">
             <tr>
-                <td style="max-width: 25%; word-wrap: break-word;"><a href="/{{ short_code }}">/{{ short_code }}</a></td>
-                <td style="max-width: 75%; word-wrap: break-word;">{{ original_url }}</td>
+                <th style="max-width: 25%; word-wrap: break-word;">Shorten URL</th>
+                <th style="max-width: 75%; word-wrap: break-word;">Original URL</th>
             </tr>
-        {% endfor %}
-    </table>
-</div>
-</body>
+            {% for short_code, original_url in url_mapping.items() %}
+                <tr>
+                    <td style="max-width: 25%; word-wrap: break-word;"><a href="/{{ short_code }}">/{{ short_code }}</a></td>
+                    <td style="max-width: 75%; word-wrap: break-word;">{{ original_url }}</td>
+                </tr>
+            {% endfor %}
+        </table>
+    </div>
 
-<script>
-    function togglePersonalShortcut() {
-        var shortcutType = document.getElementById("shortcut_type").value;
-        var personalShortcutContainer = document.getElementById("personal_shortcut_container");
-        
-        if (shortcutType === "personal") {
-            personalShortcutContainer.style.display = "block"; // Show the personal shortcut input
-        } else {
-            personalShortcutContainer.style.display = "none"; // Hide the personal shortcut input
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
+    <script>
+        function togglecustomShortcut() {
+            var shortcutType = document.getElementById("shortcut_type").value;
+            var customShortcutContainer = document.getElementById("custom_shortcut_container");
+            
+            if (shortcutType === "custom") {
+                customShortcutContainer.style.display = "block"; // Show the custom shortcut input
+            } else {
+                customShortcutContainer.style.display = "none"; // Hide the custom shortcut input
+            }
         }
-    }
-</script>
+
+        document.getElementById('urlForm').onsubmit = function(event) {
+            event.preventDefault(); // Prevent the default form submission
+            const formData = new FormData(this);
+            fetch('/', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => {
+                if (!response.ok) {
+                    return response.json().then(err => { throw err; });
+                }
+                return response.text(); // Handle success response
+            })
+            .then(data => {
+                // Success: refresh page
+                location.reload();
+            })
+            .catch(err => {
+                // Show error popup
+                swal("Error", err.error, "error");
+            });
+        };
+    </script>
+</body>
+</html>

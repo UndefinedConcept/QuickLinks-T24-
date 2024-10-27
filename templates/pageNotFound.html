@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>404 Not Found</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+<body>
+    <script>
+        // Function to show the SweetAlert popup
+        function showError() {
+            Swal.fire({
+                title: '404 Not Found',
+                text: 'The page you are looking for does not exist.',
+                icon: 'error',
+                confirmButtonText: 'Go to Home',
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Redirect to home page
+                    window.location.href = "/";
+                }
+            });
+        }
+
+        // Call the function to show the error message
+        showError();
+    </script>
+</body>
+</html>
